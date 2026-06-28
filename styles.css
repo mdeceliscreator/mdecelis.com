@@ -132,8 +132,8 @@ input {
   justify-content: space-between;
   width: 100%;
   gap: 56px;
-  padding-top: 84px;
-  padding-bottom: 56px;
+  padding-top: 68px;
+  padding-bottom: 36px;
 }
 
 .hero-left {
@@ -193,7 +193,7 @@ input {
 }
 
 .hero-eyebrow {
-  margin: 0 auto 1rem;
+  margin: 0 auto 0.65rem;
   font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -268,7 +268,7 @@ input {
   line-height: 1.9;
   letter-spacing: -0.01em;
   color: #7a6659;
-  margin-top: 1.25rem;
+  margin-top: 1rem;
   margin-bottom: 0;
   max-width: 42rem;
 }
@@ -277,7 +277,7 @@ input {
   display: flex;
   gap: 12px;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1.35rem;
   margin-left: auto;
 }
 
@@ -485,7 +485,7 @@ input {
 }
 
 .hero .section-arrow {
-  bottom: 28px;
+  bottom: 16px;
 }
 
 /* Sections */
