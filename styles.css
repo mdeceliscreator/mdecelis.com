@@ -167,6 +167,31 @@ input {
   object-fit: cover;
 }
 
+.photo-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 340px;
+}
+
+.photo-slot {
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(43, 27, 17, 0.1);
+  border: 1px solid rgba(43, 27, 17, 0.08);
+  background: #fdf8f1;
+}
+
+.portfolio-photo,
+.hero-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .hero-eyebrow {
   margin: 0 auto 1rem;
   font-size: 0.82rem;
