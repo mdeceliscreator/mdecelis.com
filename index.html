@@ -108,13 +108,18 @@
           <div class="about-text">
             <p class="about-lead">
               Hi, I’m Matt DeCelis. A 27-year-old Sydney-based UGC creator specialising in authentic,
-              social-first content for brands across TikTok, Instagram and paid social.
+              social media ready content.
             </p>
 
             <p>
               I focus on clean visuals and natural storytelling — everyday moments framed to feel
               native to each platform. My content aims to build trust with audiences while fitting
               seamlessly into feeds.
+            </p>
+
+            <p>
+              I'm a musician, music producer, rugby player, who loves to travel and go to concerts
+              every weekend.
             </p>
 
             <p>
@@ -160,11 +165,10 @@
                   <video
                     class="ugc-video"
                     playsinline
-                    preload="metadata"
-                    poster="assets/images/laptop-stand-cover.jpg"
+                    preload="auto"
                     data-video
                   >
-                    <source src="assets/videos/UGC Example - Laptop Stand.mp4" type="video/mp4" />
+                    <source src="assets/videos/Sensyne Ringlight.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                   <button class="video-play-button" type="button" aria-label="Play video" data-play>
@@ -187,7 +191,7 @@
                 </div>
               </div>
             </div>
-            <h4 class="example-title">RING LIGHT</h4>
+            <h4 class="example-title">Ring Light</h4>
           </div>
 
           <div class="example-item">
@@ -197,11 +201,10 @@
                   <video
                     class="ugc-video"
                     playsinline
-                    preload="metadata"
-                    poster="assets/images/sunset-lamp-cover.jpg"
+                    preload="auto"
                     data-video
                   >
-                    <source src="assets/videos/UGC Example - Sunset Lamp.mp4" type="video/mp4" />
+                    <source src="assets/videos/Audio Technica.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                   <button class="video-play-button" type="button" aria-label="Play video" data-play>
@@ -224,7 +227,69 @@
                 </div>
               </div>
             </div>
-            <h4 class="example-title">HEADPHONES</h4>
+            <h4 class="example-title">Headphones</h4>
+          </div>
+
+          <div class="example-item">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="video-card" data-video-card>
+                  <video class="ugc-video" playsinline preload="auto" data-video>
+                    <source src="assets/videos/ZS10 Pro Earphones.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <button class="video-play-button" type="button" aria-label="Play video" data-play>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M8 5.5v13l10-6.5-10-6.5Z"></path>
+                    </svg>
+                  </button>
+                  <div class="video-controls">
+                    <input
+                      class="video-progress"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="0"
+                      step="0.1"
+                      aria-label="Video progress"
+                      data-progress
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h4 class="example-title">In-Ear Monitors</h4>
+          </div>
+
+          <div class="example-item">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="video-card" data-video-card>
+                  <video class="ugc-video" playsinline preload="auto" data-video>
+                    <source src="assets/videos/Boya Mini 2.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <button class="video-play-button" type="button" aria-label="Play video" data-play>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M8 5.5v13l10-6.5-10-6.5Z"></path>
+                    </svg>
+                  </button>
+                  <div class="video-controls">
+                    <input
+                      class="video-progress"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="0"
+                      step="0.1"
+                      aria-label="Video progress"
+                      data-progress
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h4 class="example-title">Bluetooth Mic</h4>
           </div>
         </div>
       </div>
@@ -368,6 +433,22 @@
             }
           };
 
+          const setFirstFramePoster = () => {
+            if (video.dataset.posterReady === "true") return;
+            if (!video.videoWidth || !video.videoHeight) return;
+
+            const canvas = document.createElement("canvas");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return;
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            video.poster = canvas.toDataURL("image/jpeg", 0.85);
+            video.dataset.posterReady = "true";
+          };
+
           playButton.addEventListener("click", (e) => {
             e.stopPropagation();
             togglePlayback();
@@ -385,6 +466,8 @@
           video.addEventListener("loadedmetadata", () => {
             progress.value = 0;
           });
+
+          video.addEventListener("loadeddata", setFirstFramePoster);
 
           video.addEventListener("timeupdate", () => {
             if (!video.duration) return;
