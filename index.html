@@ -239,7 +239,7 @@
         <div class="phone-frame">
           <div class="phone-screen">
             <div class="video-card" data-video-card>
-              <video class="ugc-video" playsinline preload="auto" data-video>
+              <video class="ugc-video" playsinline preload="auto" data-video data-poster-frame="final">
                 <source src="assets/videos/Youfoodz.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
@@ -598,20 +598,35 @@
             }
           };
 
-          const setFirstFramePoster = () => {
+          const setPosterFrame = () => {
             if (video.dataset.posterReady === "true") return;
             if (!video.videoWidth || !video.videoHeight) return;
 
-            const canvas = document.createElement("canvas");
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+            const drawPosterFrame = () => {
+              const canvas = document.createElement("canvas");
+              canvas.width = video.videoWidth;
+              canvas.height = video.videoHeight;
 
-            const ctx = canvas.getContext("2d");
-            if (!ctx) return;
+              const ctx = canvas.getContext("2d");
+              if (!ctx) return;
 
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            video.poster = canvas.toDataURL("image/jpeg", 0.85);
-            video.dataset.posterReady = "true";
+              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+              video.poster = canvas.toDataURL("image/jpeg", 0.85);
+              video.dataset.posterReady = "true";
+            };
+
+            if (video.dataset.posterFrame !== "final" || !Number.isFinite(video.duration)) {
+              drawPosterFrame();
+              return;
+            }
+
+            const initialTime = video.currentTime;
+            const finalTime = Math.max(video.duration - 0.05, 0);
+            video.addEventListener("seeked", () => {
+              drawPosterFrame();
+              video.currentTime = initialTime;
+            }, { once: true });
+            video.currentTime = finalTime;
           };
 
           playButton.addEventListener("click", (e) => {
@@ -632,7 +647,7 @@
             progress.value = 0;
           });
 
-          video.addEventListener("loadeddata", setFirstFramePoster);
+          video.addEventListener("loadeddata", setPosterFrame);
 
           video.addEventListener("timeupdate", () => {
             if (!video.duration) return;
