@@ -599,7 +599,7 @@
           };
 
           const setPosterFrame = () => {
-            if (video.dataset.posterReady === "true") return;
+            if (video.poster || video.dataset.posterReady === "true") return;
             if (!video.videoWidth || !video.videoHeight) return;
 
             const drawPosterFrame = () => {
@@ -615,18 +615,7 @@
               video.dataset.posterReady = "true";
             };
 
-            if (video.dataset.posterFrame !== "final" || !Number.isFinite(video.duration)) {
-              drawPosterFrame();
-              return;
-            }
-
-            const initialTime = video.currentTime;
-            const finalTime = Math.max(video.duration - 0.05, 0);
-            video.addEventListener("seeked", () => {
-              drawPosterFrame();
-              video.currentTime = initialTime;
-            }, { once: true });
-            video.currentTime = finalTime;
+            drawPosterFrame();
           };
 
           playButton.addEventListener("click", (e) => {
